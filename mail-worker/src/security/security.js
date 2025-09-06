@@ -14,7 +14,8 @@ const exclude = [
 	'/file',
 	'/setting/websiteConfig',
 	'/webhooks',
-	'/init'
+	'/init',
+	'/public/genToken'
 ];
 
 const requirePerms = [
@@ -32,7 +33,6 @@ const requirePerms = [
 	'/role/setDefault',
 	'/allEmail/list',
 	'/allEmail/delete',
-	'/setting/physicsDeleteAll',
 	'/setting/setBackground',
 	'/setting/set',
 	'/setting/query',
@@ -69,10 +69,9 @@ const premKey = {
 	'user:set-type': ['/user/setType'],
 	'user:delete': ['/user/delete'],
 	'all-email:query': ['/allEmail/list'],
-	'all-email:delete': ['/allEmail/delete'],
+	'all-email:delete': ['/allEmail/delete','/allEmail/batchDelete'],
 	'setting:query': ['/setting/query'],
 	'setting:set': ['/setting/set', '/setting/setBackground'],
-	'setting:clean': ['/setting/physicsDeleteAll'],
 	'analysis:query': ['/analysis/echarts'],
 	'reg-key:add': ['/regKey/add'],
 	'reg-key:query': ['/regKey/list','/regKey/history'],
@@ -92,6 +91,16 @@ app.use('*', async (c, next) => {
 	});
 
 	if (index > -1) {
+		return await next();
+	}
+
+	if (path.startsWith('/public')) {
+
+		const userPublicToken = await c.env.kv.get(KvConst.PUBLIC_KEY);
+		const publicToken = c.req.header(constant.TOKEN_HEADER);
+		if (publicToken !== userPublicToken) {
+			throw new BizError(t('publicTokenFail'), 401);
+		}
 		return await next();
 	}
 

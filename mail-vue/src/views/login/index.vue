@@ -9,89 +9,96 @@
     </div>
     <div v-else :style="background"></div>
     <div class="form-wrapper">
-        <div class="container">
-          <span class="form-title">{{settingStore.settings.title}}</span>
-          <span class="form-desc" v-if="show === 'login'">{{$t('loginTitle')}}</span>
-          <span class="form-desc" v-else>{{$t('regTitle')}}</span>
-          <div v-show="show === 'login'">
-            <el-input class="email-input" v-model="form.email" type="text" :placeholder="$t('emailAccount')" autocomplete="off">
-              <template #append>
-                <div @click.stop="openSelect">
-                  <el-select
-                      v-if="show === 'login'"
-                      ref="mySelect"
-                      v-model="suffix"
-                      :placeholder="$t('select')"
-                      class="select"
-                  >
-                    <el-option
-                        v-for="item in domainList"
-                        :key="item"
-                        :label="item"
-                        :value="item"
-                    />
-                  </el-select>
-                  <div style="color: #333">
-                    <span>{{ suffix }}</span>
-                    <Icon class="setting-icon" icon="mingcute:down-small-fill" width="20" height="20"/>
-                  </div>
+      <div class="container">
+        <span class="form-title">{{ settingStore.settings.title }}</span>
+        <span class="form-desc" v-if="show === 'login'">{{ $t('loginTitle') }}</span>
+        <span class="form-desc" v-else>{{ $t('regTitle') }}</span>
+        <div v-show="show === 'login'">
+          <el-input :class="settingStore.settings.loginDomain === 0 ? 'email-input' : ''" v-model="form.email"
+                    type="text" :placeholder="$t('emailAccount')" autocomplete="off">
+            <template #append v-if="settingStore.settings.loginDomain === 0">
+              <div @click.stop="openSelect">
+                <el-select
+                    v-if="show === 'login'"
+                    ref="mySelect"
+                    v-model="suffix"
+                    :placeholder="$t('select')"
+                    class="select"
+                >
+                  <el-option
+                      v-for="item in domainList"
+                      :key="item"
+                      :label="item"
+                      :value="item"
+                  />
+                </el-select>
+                <div style="color: var(--el-text-color-primary)">
+                  <span>{{ suffix }}</span>
+                  <Icon class="setting-icon" icon="mingcute:down-small-fill" width="20" height="20"/>
                 </div>
-              </template>
-            </el-input>
-            <el-input v-model="form.password" :placeholder="$t('password')" type="password" autocomplete="off">
-            </el-input>
-            <el-button class="btn" type="primary" @click="submit" :loading="loginLoading"
-            >{{$t('loginBtn')}}
-            </el-button>
-          </div>
-          <div v-show="show !== 'login'">
-            <el-input class="email-input" v-model="registerForm.email" type="text" :placeholder="$t('emailAccount')" autocomplete="off">
-              <template #append>
-                <div @click.stop="openSelect">
-                  <el-select
-                      v-if="show !== 'login'"
-                      ref="mySelect"
-                      v-model="suffix"
-                      :placeholder="$t('select')"
-                      class="select"
-                  >
-                    <el-option
-                        v-for="item in domainList"
-                        :key="item"
-                        :label="item"
-                        :value="item"
-                    />
-                  </el-select>
-                  <div style="color: #333">
-                    <span>{{ suffix }}</span>
-                    <Icon class="setting-icon" icon="mingcute:down-small-fill" width="20" height="20"/>
-                  </div>
-                </div>
-              </template>
-            </el-input>
-            <el-input v-model="registerForm.password" :placeholder="$t('password')" type="password" autocomplete="off" />
-            <el-input v-model="registerForm.confirmPassword" :placeholder="$t('confirmPwd')" type="password" autocomplete="off" />
-            <el-input v-if="settingStore.settings.regKey === 0" v-model="registerForm.code" :placeholder="$t('regKey')" type="text" autocomplete="off" />
-            <el-input v-if="settingStore.settings.regKey === 2" v-model="registerForm.code" :placeholder="$t('regKeyOptional')" type="text" autocomplete="off" />
-            <div v-show="verifyShow"
-                class="register-turnstile"
-                :data-sitekey="settingStore.settings.siteKey"
-                data-callback="onTurnstileSuccess"
-                data-error-callback="onTurnstileError"
-                data-after-interactive-callback="loadAfter"
-                data-before-interactive-callback="loadBefore"
-            >
-              <span style="font-size: 12px;color: #F56C6C" v-if="botJsError">{{$t('verifyModuleFailed')}}</span>
-            </div>
-            <el-button class="btn" type="primary" @click="submitRegister" :loading="registerLoading"
-            >{{$t('regBtn')}}
-            </el-button>
-          </div>
-          <template v-if="settingStore.settings.register === 0">
-            <div class="switch" @click="show = 'register'" v-if="show === 'login'">{{$t('noAccount')}} <span>{{$t('regSwitch')}}</span></div>
-            <div class="switch" @click="show = 'login'" v-else>{{$t('hasAccount')}} <span>{{$t('loginSwitch')}}</span></div>
-          </template>
+              </div>
+            </template>
+          </el-input>
+          <el-input v-model="form.password" :placeholder="$t('password')" type="password" autocomplete="off">
+          </el-input>
+          <el-button class="btn" type="primary" @click="submit" :loading="loginLoading"
+          >{{ $t('loginBtn') }}
+          </el-button>
         </div>
+        <div v-show="show !== 'login'">
+          <el-input class="email-input" v-model="registerForm.email" type="text" :placeholder="$t('emailAccount')"
+                    autocomplete="off">
+            <template #append>
+              <div @click.stop="openSelect">
+                <el-select
+                    v-if="show !== 'login'"
+                    ref="mySelect"
+                    v-model="suffix"
+                    :placeholder="$t('select')"
+                    class="select"
+                >
+                  <el-option
+                      v-for="item in domainList"
+                      :key="item"
+                      :label="item"
+                      :value="item"
+                  />
+                </el-select>
+                <div>
+                  <span>{{ suffix }}</span>
+                  <Icon class="setting-icon" icon="mingcute:down-small-fill" width="20" height="20"/>
+                </div>
+              </div>
+            </template>
+          </el-input>
+          <el-input v-model="registerForm.password" :placeholder="$t('password')" type="password" autocomplete="off"/>
+          <el-input v-model="registerForm.confirmPassword" :placeholder="$t('confirmPwd')" type="password"
+                    autocomplete="off"/>
+          <el-input v-if="settingStore.settings.regKey === 0" v-model="registerForm.code" :placeholder="$t('regKey')"
+                    type="text" autocomplete="off"/>
+          <el-input v-if="settingStore.settings.regKey === 2" v-model="registerForm.code"
+                    :placeholder="$t('regKeyOptional')" type="text" autocomplete="off"/>
+          <div v-show="verifyShow"
+               class="register-turnstile"
+               :data-sitekey="settingStore.settings.siteKey"
+               data-callback="onTurnstileSuccess"
+               data-error-callback="onTurnstileError"
+               data-after-interactive-callback="loadAfter"
+               data-before-interactive-callback="loadBefore"
+          >
+            <span style="font-size: 12px;color: #F56C6C" v-if="botJsError">{{ $t('verifyModuleFailed') }}</span>
+          </div>
+          <el-button class="btn" type="primary" @click="submitRegister" :loading="registerLoading"
+          >{{ $t('regBtn') }}
+          </el-button>
+        </div>
+        <template v-if="settingStore.settings.register === 0">
+          <div class="switch" @click="show = 'register'" v-if="show === 'login'">{{ $t('noAccount') }}
+            <span>{{ $t('regSwitch') }}</span></div>
+          <div class="switch" @click="show = 'login'" v-else>{{ $t('hasAccount') }} <span>{{ $t('loginSwitch') }}</span>
+          </div>
+        </template>
+      </div>
     </div>
   </div>
 </template>
@@ -112,7 +119,7 @@ import {loginUserInfo} from "@/request/my.js";
 import {permsToRouter} from "@/perm/perm.js";
 import {useI18n} from "vue-i18n";
 
-const { t } = useI18n();
+const {t} = useI18n();
 const accountStore = useAccountStore();
 const userStore = useUserStore();
 const uiStore = useUiStore();
@@ -139,20 +146,27 @@ const verifyShow = ref(false)
 let verifyToken = ''
 let turnstileId = null
 let botJsError = ref(false)
+let verifyErrorCount = 0
 
 window.onTurnstileSuccess = (token) => {
   verifyToken = token;
 };
 
 window.onTurnstileError = (e) => {
-  console.log('人机验加载失败')
-  nextTick(() => {
-    if (!turnstileId) {
-      turnstileId = window.turnstile.render('.register-turnstile')
-    } else {
-      window.turnstile.reset(turnstileId);
-    }
-  })
+  if (verifyErrorCount >= 4) {
+    return
+  }
+  verifyErrorCount++
+  console.warn('人机验加载失败', e)
+  setTimeout(() => {
+    nextTick(() => {
+      if (!turnstileId) {
+        turnstileId = window.turnstile.render('.register-turnstile')
+      } else {
+        window.turnstile.reset(turnstileId);
+      }
+    })
+  }, 1500)
 };
 
 window.loadAfter = (e) => {
@@ -164,7 +178,8 @@ window.loadBefore = (e) => {
 }
 
 const loginOpacity = computed(() => {
-  return `rgba(255, 255, 255, ${settingStore.settings.loginOpacity})`
+  const opacity = settingStore.settings.loginOpacity
+  return uiStore.dark ? `rgba(0, 0, 0, ${opacity})` : `rgba(255, 255, 255, ${opacity})`
 })
 
 const background = computed(() => {
@@ -193,7 +208,9 @@ const submit = () => {
     return
   }
 
-  if (!isEmail(form.email + suffix.value)) {
+  let email = form.email + (settingStore.settings.loginDomain === 0 ? suffix.value : '');
+
+  if (!isEmail(email)) {
     ElMessage({
       message: t('notEmailMsg'),
       type: 'error',
@@ -212,7 +229,7 @@ const submit = () => {
   }
 
   loginLoading.value = true
-  login(form.email + suffix.value, form.password).then(async data => {
+  login(email, form.password).then(async data => {
     localStorage.setItem('token', data.token)
     const user = await loginUserInfo();
     accountStore.currentAccountId = user.accountId;
@@ -277,7 +294,7 @@ function submitRegister() {
     return
   }
 
-  if(settingStore.settings.regKey === 0) {
+  if (settingStore.settings.regKey === 0) {
 
     if (!registerForm.code) {
 
@@ -399,7 +416,7 @@ function submitRegister() {
   justify-content: center;
   width: 450px;
   height: 100%;
-  border: 1px solid #e4e7ed;
+  border-left: 1px solid var(--login-border);
   box-shadow: var(--el-box-shadow-light);
   @media (max-width: 1024px) {
     padding: 20px 18px;
@@ -407,6 +424,7 @@ function submitRegister() {
     margin-left: 18px;
   }
   @media (max-width: 767px) {
+    border: 1px solid var(--login-border);
     padding: 20px 18px;
     border-radius: 6px;
     height: fit-content;
@@ -414,6 +432,7 @@ function submitRegister() {
     margin-right: 18px;
     margin-left: 18px;
   }
+
   .btn {
     height: 36px;
     width: 100%;
@@ -423,35 +442,39 @@ function submitRegister() {
   .form-desc {
     margin-top: 5px;
     margin-bottom: 18px;
-    color: #71717a;
+    color: var(--form-desc-color);
   }
 
   .form-title {
-    font-weight: bold;
+    font-weight: bold;;
     font-size: 22px !important;
   }
 
   .switch {
     margin-top: 20px;
     text-align: center;
+
     span {
-      color: #006be6;
+      color: var(--login-switch-color);
       cursor: pointer;
     }
   }
 
   :deep(.el-input__wrapper) {
     border-radius: 6px;
+    background: var(--el-bg-color);
   }
 
-  .email-input :deep(.el-input__wrapper){
+  .email-input :deep(.el-input__wrapper) {
     border-radius: 6px 0 0 6px;
+    background: var(--el-bg-color);
   }
 
   .el-input {
     height: 38px;
     width: 100%;
     margin-bottom: 18px;
+
     :deep(.el-input__inner) {
       height: 36px;
     }
@@ -471,7 +494,7 @@ function submitRegister() {
   padding: 0 !important;
   padding-left: 8px !important;
   padding-right: 4px !important;
-  background: #FFFFFF;
+  background: var(--el-bg-color);
   border-radius: 0 8px 8px 0;
 }
 
@@ -497,10 +520,8 @@ function submitRegister() {
 }
 
 
-
 #login-box {
   background: linear-gradient(to bottom, #2980b9, #6dd5fa, #fff);
-  color: #333;
   font: 100% Arial, sans-serif;
   height: 100%;
   margin: 0;

@@ -32,7 +32,7 @@
     </div>
     <div class="del-email" v-perm="'my:delete'">
       <div class="title">{{$t('deleteUser')}}</div>
-      <div style="color: #585d69;">
+      <div style="color: var(--regular-text-color);">
         {{$t('delAccountMsg')}}
       </div>
       <div>
@@ -41,8 +41,8 @@
     </div>
     <el-dialog v-model="pwdShow" :title="$t('changePassword')" width="340">
       <div class="update-pwd">
-        <el-input type="password" :placeholder="$t('newPassword')" v-model="form.password"/>
-        <el-input type="password" :placeholder="$t('confirmPassword')" v-model="form.newPwd"/>
+        <el-input type="password" :placeholder="$t('newPassword')" v-model="form.password" autocomplete="off"/>
+        <el-input type="password" :placeholder="$t('confirmPassword')" v-model="form.newPwd" autocomplete="off"/>
         <el-button type="primary" :loading="setPwdLoading" @click="submitPwd">{{$t('save')}}</el-button>
       </div>
     </el-dialog>
@@ -195,7 +195,7 @@ function submitPwd() {
 
   .title {
     font-size: 18px;
-    font-weight: bold;
+    font-weight: bold;;
   }
 
   .container {
@@ -206,8 +206,8 @@ function submitPwd() {
 
     .item {
       display: grid;
-      grid-template-columns: 50px 1fr;
-      gap: 140px;
+      grid-template-columns: 70px 1fr;
+      gap: 120px;
       position: relative;
       .user-name {
         display: grid;

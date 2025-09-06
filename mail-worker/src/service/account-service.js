@@ -152,17 +152,8 @@ const accountService = {
 		await orm(c).insert(account).values({ ...params }).returning();
 	},
 
-	async physicsDeleteAll(c) {
-		const accountIdsRow = await orm(c).select({accountId: account.accountId}).from(account).where(eq(account.isDel,isDel.DELETE)).limit(99);
-		if (accountIdsRow.length === 0) {
-			return;
-		}
-		const accountIds = accountIdsRow.map(item => item.accountId)
-		await emailService.physicsDeleteAccountIds(c, accountIds);
-		await orm(c).delete(account).where(inArray(account.accountId,accountIds)).run();
-		if (accountIdsRow.length === 99) {
-			await this.physicsDeleteAll(c)
-		}
+	async insertList(c, list) {
+		await orm(c).insert(account).values(list).run();
 	},
 
 	async physicsDeleteByUserIds(c, userIds) {
