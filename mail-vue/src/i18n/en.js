@@ -1,5 +1,5 @@
 const en = {
-    inbox: 'Inbox',
+    '收件箱': 'Inbox',
     drafts: 'Drafts',
     sent: 'Sent',
     starred: 'Starred',
@@ -14,6 +14,8 @@ const en = {
     noMessagesFound: 'No messages found',
     addAccount: 'Add Account',
     emailAccount: 'Email',
+    account: 'Account',
+    userAccount: 'User Accounts',
     deleteUser: 'Delete Account',
     deleteUserBtn: 'Delete',
     changePassword: 'Change Password',
@@ -51,7 +53,7 @@ const en = {
     tabReceived: 'Received',
     tabSent: 'Sent',
     tabMailboxes: 'Accounts',
-    tabRegisteredAt: 'Registered At',
+    tabRegisteredAt: 'Registered at',
     tabStatus: 'Status',
     tabRole: 'Role',
     roleName: 'Name',
@@ -209,7 +211,7 @@ const en = {
     addRoleTitle: 'Add Role',
     emptyUserNameMsg: 'Name cannot be empty',
     delAccountConfirm: 'Confirm deleting current account and all associated data?',
-    clearAllDelConfirm: 'This action is irreversible. Enter <b style="font-weight: bold;">DELETE</b> to proceed',
+    clearAllDelConfirm: 'This action is irreversible. Enter <b style="font-weight: bold">DELETE</b> to proceed',
     warning: 'Warning',
     delInputPattern: 'DELETE',
     inputErrorMessage: 'Please enter DELETE to confirm',
@@ -249,7 +251,7 @@ const en = {
     supportDesc: 'Buy me tea',
     featDesc: 'Feature Description',
     emailInterception: 'Email Interception',
-    emailInterceptionDesc: 'Enter a domain or email address to prevent users from receiving emails from certain websites.',
+    emailInterceptionDesc: 'Enter a domain or email address to prevent users from receiving emails from certain websites (Enter * to block all).',
     availableDomains: 'Available Domains',
     availableDomainsDesc: 'Restrict users to email domains specified. Domains not on the approved list will be blocked from registration, adding email addresses, and sending/receiving emails. If left blank, all domains will be allowed by default.',
     backgroundUrlDesc: 'Image URL',
@@ -289,7 +291,10 @@ const en = {
     clear: 'Clear',
     include: 'Include',
     delAllEmailConfirm: 'Do you really want to delete it?',
-    s3Configuration: 'S3 Configuration'
+    s3Configuration: 'S3 Configuration',
+    confirmDeletionOfContacts: 'Confirm clearing contacts?',
+    recentContacts: 'Recent contacts',
+    selectContacts: 'Select'
 }
 
 export default en

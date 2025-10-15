@@ -130,7 +130,6 @@ import {nextTick, reactive, ref, watch} from "vue";
 import {accountList, accountAdd, accountDelete, accountSetName} from "@/request/account.js";
 import {sleep} from "@/utils/time-utils.js"
 import {isEmail} from "@/utils/verify-utils.js";
-import {copyText} from "@/utils/clipboard-utils.js";
 import {useSettingStore} from "@/store/setting.js";
 import {useAccountStore} from "@/store/account.js";
 import {useUserStore} from "@/store/user.js";
@@ -312,7 +311,7 @@ function add() {
 
 async function copyAccount(account) {
   try {
-    await copyText(account);
+    await navigator.clipboard.writeText(account);
     ElMessage({
       message: t('copySuccessMsg'),
       type: 'success',

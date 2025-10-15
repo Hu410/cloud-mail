@@ -446,7 +446,7 @@ function submitRegister() {
   }
 
   .form-title {
-    font-weight: bold;;
+    font-weight: bold;
     font-size: 22px !important;
   }
 

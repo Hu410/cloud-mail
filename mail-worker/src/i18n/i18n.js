@@ -2,7 +2,6 @@ import i18next from 'i18next';
 import zh from './zh.js'
 import en from './en.js'
 import app from '../hono/hono';
-import zhTW from './zh-tw';
 
 app.use('*', async (c, next) => {
 	const lang = c.req.header('accept-language')?.split('-')[0]
@@ -19,9 +18,6 @@ const resources = {
 	zh: {
 		translation: zh,
 	},
-	zhTW: {
-		translation: zhTW
-	}
 };
 
 i18next.init({
